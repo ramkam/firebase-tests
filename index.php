@@ -1,37 +1,17 @@
-<html>
+<html ng-app="myChatRoom">
   <head>
-    <script src='https://cdn.firebase.com/v0/firebase.js'></script>
-    <script src='https://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js'></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.7/angular.min.js"></script>
+    <script src="//cdn.firebase.com/js/client/1.0.2/firebase.js"></script>
+    <script src="//cdn.firebase.com/libs/angularfire/0.6.0/angularfire.min.js"></script>
+    <script src="app.js"></script>
   </head>
-  <body>
-    <div id='messagesDiv'></div>
-    <input type='text' id='nameInput' placeholder='Name'>
-    <input type='text' id='messageInput' placeholder='Message'>
-    <script>
-      // FIREBASE INIT 
-      var myDataRef = new Firebase('https://zvdju3fkxgo.firebaseio-demo.com/');
-
-      // ON DOM EVENTS -> TRIGGER FIREBASE ACTION
-      $('#messageInput').keypress(function (e) {
-        if (e.keyCode == 13) {
-          var name = $('#nameInput').val();
-          var text = $('#messageInput').val();
-          myDataRef.push({name: name, text: text});
-          $('#messageInput').val('');
-        }
-      });
-
-      // FIREBASE EVENTS
-      myDataRef.on('child_added', function(snapshot) {
-        var message = snapshot.val();
-        displayChatMessage(message.name, message.text);
-      });
-
-      // EVENT CALLBACK
-      function displayChatMessage(name, text) {
-        $('<div/>').text(text).prepend($('<em/>').text(name+': ')).appendTo($('#messagesDiv'));
-        $('#messagesDiv')[0].scrollTop = $('#messagesDiv')[0].scrollHeight;
-      };
-    </script>
+  <body ng-controller="ChatController">
+    <ul ng-repeat="message in messages">
+      <li>{{message.from}}: {{message.content}}</li>
+    </ul>
+    <form ng-submit="addMessage();">
+      <input type="text" ng-model="message"/>
+      <input type="submit" value="Send Message"/>
+    </form>
   </body>
 </html>
