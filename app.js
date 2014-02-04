@@ -1,4 +1,6 @@
 
+// authentication with github.
+
 var urlFstoreRoot = 'https://blistering-fire-302.firebaseio.com';
 
 angular.module("sampleApp", ["firebase"])
