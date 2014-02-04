@@ -1,0 +1,9 @@
+#auth {
+  border: none;
+}
+
+@media screen and (max-width: 740px) { 
+  #auth button {
+    width: 100%;
+  }
+}
